@@ -10,5 +10,5 @@ const itemSchema = new Schema({
   lastCheckedDate: Date,
 });
 
-const ItemModel = mongoose.model("Item", itemSchema);
-module.exports = ItemModel;
+const Item = mongoose.model("Item", itemSchema);
+module.exports = Item;

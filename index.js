@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 4000;
+const itemRouter = require("./controllers/itemController");
 
 // Middleware
 app.use(cors());
@@ -17,5 +18,7 @@ app.get("/", (req, res) => {
     message: "Route sucessful",
   });
 });
+
+app.use("/item", itemRouter);
 
 app.listen(PORT, () => console.log(`Server is up and running on: ${PORT}`));
