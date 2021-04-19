@@ -3,7 +3,11 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const DB = mongoose.connection;
 const { MONGODBURI } = process.env;
-const config = { useUnifiedTopology: true, useNewUrlParser: true };
+const config = {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useCreateIndex: true,
+};
 
 mongoose.connect(MONGODBURI, config);
 
