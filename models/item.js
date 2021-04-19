@@ -8,6 +8,7 @@ const itemSchema = new Schema({
   loggedDate: { type: Date, default: Date.now },
   obtainedDate: Date,
   lastCheckedDate: { type: Date, default: Date.now },
+  user: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
 const Item = mongoose.model("Item", itemSchema);

@@ -9,7 +9,21 @@ const Item = require("../models/item");
 const { registerValidation, loginValidation } = require("../validation");
 const verifyToken = require("./verifyToken");
 
-// Add an item to specific user by ID
+//* Find a single user by ID (used to access items as well)
+router.get("/profile", verifyToken, async (req, res) => {
+  const userId = req.user._id;
+  User.findById(userId)
+    .populate("items")
+    .then((user) => {
+      res.json({
+        user: { username: user.username, email: user.email },
+        items: user.items,
+      });
+    })
+    .catch((err) => res.json({ status: 400, err: err }));
+});
+
+//* Add an item to specific user by ID
 router.get("/item/create", verifyToken, async (req, res) => {
   const userId = req.user._id;
   User.findById(userId)
@@ -21,6 +35,7 @@ router.get("/item/create", verifyToken, async (req, res) => {
           type: req.body.type,
           quantity: req.body.quantity,
           obtainedDate: req.body.obtainedDate,
+          user: user._id,
         }).then((item) => {
           user.items.push(item);
         }),
