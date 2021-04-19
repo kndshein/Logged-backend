@@ -2,12 +2,12 @@ const mongoose = require("../db/connection");
 const Schema = mongoose.Schema;
 
 const itemSchema = new Schema({
-  name: String,
-  type: String,
+  name: { type: String, required: true },
+  type: { type: String, default: "NC" },
   quantity: Number,
-  loggedDate: Date,
+  loggedDate: { type: Date, default: Date.now },
   obtainedDate: Date,
-  lastCheckedDate: Date,
+  lastCheckedDate: { type: Date, default: Date.now },
 });
 
 const Item = mongoose.model("Item", itemSchema);
