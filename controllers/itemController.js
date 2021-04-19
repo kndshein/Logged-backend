@@ -14,7 +14,7 @@ const verifyToken = require("./verifyToken.js");
 // });
 
 //* Find a single item by ID
-// Checks if item user matches user before updating
+// Checks if item user matches user
 router.get("/id/:id", verifyToken, async (req, res) => {
   const userId = req.user._id;
   Item.findById(req.params.id)
@@ -48,5 +48,20 @@ router.put("/id/:id", verifyToken, async (req, res) => {
 });
 
 //* Delete a single item by ID
+// Checks if item user matches user before updating
+router.delete("/id/:id", verifyToken, async (req, res) => {
+  const userId = req.user._id;
+  Item.findById(req.params.id)
+    .then((item) => {
+      if (item.user == userId) {
+        Item.findByIdAndDelete(req.params.id).then(() => {
+          res.send("Successfully deleted");
+        });
+      } else {
+        res.send("Item doesn't match user");
+      }
+    })
+    .catch((err) => res.send({ status: 400, err: err }));
+});
 
 module.exports = router;
